@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hawks - Photo Gallery</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">The Hawks</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link active">Gallery</a>
+                <a href="upload.html" class="nav-link">Upload</a>
+                <a href="login.html" class="nav-link" id="loginLink">Login</a>
+                <button class="nav-link logout-btn" id="logoutBtn" style="display: none;">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="hero">
+                <h2>Cooperstown Dreams Park</h2>
+                <p>July 30 – August 5, 2024</p>
+            </div>
+
+            <div class="gallery" id="gallery">
+                <!-- Photos will be loaded here -->
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Loading photos...</p>
+            </div>
+
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">📸</div>
+                <h3>No photos yet</h3>
+                <p>Be the first to upload photos from Cooperstown Dreams Park!</p>
+                <a href="upload.html" class="btn btn-primary">Upload Photo</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/gallery.js"></script>
+</body>
+</html> 

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Photo - The Hawks</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">The Hawks</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Gallery</a>
+                <a href="upload.html" class="nav-link active">Upload</a>
+                <button class="nav-link logout-btn" id="logoutBtn">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="upload-container">
+                <div class="upload-card">
+                    <div class="upload-header">
+                        <h2>Upload Photo</h2>
+                        <p>Share memories from Cooperstown Dreams Park</p>
+                    </div>
+
+                    <form id="uploadForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="photoFile" class="form-label">Select Photo</label>
+                            <div class="file-input-wrapper">
+                                <input 
+                                    type="file" 
+                                    id="photoFile" 
+                                    name="photoFile" 
+                                    class="file-input" 
+                                    accept="image/*"
+                                    required
+                                >
+                                <div class="file-input-display">
+                                    <div class="file-input-placeholder">
+                                        <div class="file-icon">📸</div>
+                                        <p>Click to select a photo</p>
+                                        <p class="file-hint">JPG, PNG, or GIF up to 10MB</p>
+                                    </div>
+                                    <div class="file-preview" id="filePreview" style="display: none;">
+                                        <img id="previewImage" alt="Preview">
+                                        <button type="button" class="remove-file" id="removeFile">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Tag Players (Optional)</label>
+                            <div class="player-tags">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player1">
+                                    <span class="checkbox-custom"></span>
+                                    Player 1
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player2">
+                                    <span class="checkbox-custom"></span>
+                                    Player 2
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player3">
+                                    <span class="checkbox-custom"></span>
+                                    Player 3
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player4">
+                                    <span class="checkbox-custom"></span>
+                                    Player 4
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player5">
+                                    <span class="checkbox-custom"></span>
+                                    Player 5
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player6">
+                                    <span class="checkbox-custom"></span>
+                                    Player 6
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player7">
+                                    <span class="checkbox-custom"></span>
+                                    Player 7
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player8">
+                                    <span class="checkbox-custom"></span>
+                                    Player 8
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player9">
+                                    <span class="checkbox-custom"></span>
+                                    Player 9
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player10">
+                                    <span class="checkbox-custom"></span>
+                                    Player 10
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player11">
+                                    <span class="checkbox-custom"></span>
+                                    Player 11
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="players" value="player12">
+                                    <span class="checkbox-custom"></span>
+                                    Player 12
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                            <span class="btn-text">Upload Photo</span>
+                            <span class="btn-loading" style="display: none;">
+                                <div class="spinner-small"></div>
+                                Uploading...
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="success-message" id="successMessage" style="display: none;">
+                    <div class="success-icon">✅</div>
+                    <h3>Photo uploaded successfully!</h3>
+                    <p>Your photo has been added to the gallery.</p>
+                    <div class="success-actions">
+                        <a href="index.html" class="btn btn-secondary">View Gallery</a>
+                        <button class="btn btn-primary" id="uploadAnother">Upload Another</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/upload.js"></script>
+</body>
+</html> 
