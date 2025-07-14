@@ -1,0 +1,1 @@
+db.collection('photos').orderBy('timestamp', 'desc').onSnapshot(snap => { ... });

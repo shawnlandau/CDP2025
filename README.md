@@ -1,0 +1,3 @@
+# Hawks Cooperstown Photo Sharing App
+
+This is a simple photo sharing site for The Hawks ...

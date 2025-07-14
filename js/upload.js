@@ -1,0 +1,1 @@
+document.getElementById('photoForm').onsubmit = async e => { ... }
