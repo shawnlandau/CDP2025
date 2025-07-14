@@ -32,4 +32,4 @@ db.enablePersistence()
 // Export for use in other files
 window.firebaseAuth = auth;
 window.firebaseDb = db;
-window.firebaseStorage = storage; 
+window.firebaseStorage = storage;
