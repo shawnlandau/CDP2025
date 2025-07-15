@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
         btnText.style.display = 'none';
         btnLoading.style.display = 'flex';
 
-        // Send magic link with correct GitHub Pages URL
+        // Send magic link with test URL for debugging
         const actionCodeSettings = {
-            url: 'https://shawnlandau.github.io/CDP2025/upload.html',
+            url: 'https://shawnlandau.github.io/CDP2025/test.html',
             handleCodeInApp: true
         };
 
