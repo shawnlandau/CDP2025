@@ -1,15 +1,13 @@
 // Firebase Configuration
-// TODO: Replace the empty config below with your actual Firebase config from console
-// Go to: https://console.firebase.google.com/ → Your Project → Project Settings → Your Apps → Add App → Web
-// Then copy the firebaseConfig object and paste it here:
-
+// The Hawks Photo App - Firebase Configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abc123"
+  apiKey: "AIzaSyDbH17q1a0ft5udGpkfPsWPYb4G5Lb1jEU",
+  authDomain: "the-hawks-photo-app.firebaseapp.com",
+  projectId: "the-hawks-photo-app",
+  storageBucket: "the-hawks-photo-app.firebasestorage.app",
+  messagingSenderId: "315176217689",
+  appId: "1:315176217689:web:caa6f33189013a7fe5d548",
+  measurementId: "G-428LKBHM36"
 };
 
 // Initialize Firebase
