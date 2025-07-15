@@ -32,11 +32,13 @@ document.addEventListener('DOMContentLoaded', function() {
         btnText.style.display = 'none';
         btnLoading.style.display = 'flex';
 
-        // Send magic link with test URL for debugging
+        // Send magic link with root domain
         const actionCodeSettings = {
-            url: 'https://shawnlandau.github.io/CDP2025/test.html',
+            url: 'https://shawnlandau.github.io/CDP2025/',
             handleCodeInApp: true
         };
+
+        console.log('Sending magic link to:', actionCodeSettings.url);
 
         firebaseAuth.sendSignInLinkToEmail(email, actionCodeSettings)
             .then(() => {
@@ -47,6 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 userEmailSpan.textContent = email;
                 loginForm.style.display = 'none';
                 successMessage.style.display = 'block';
+                
+                console.log('Magic link sent successfully');
             })
             .catch((error) => {
                 console.error('Error sending magic link:', error);
@@ -77,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle magic link sign-in
     if (firebaseAuth.isSignInWithEmailLink(window.location.href)) {
+        console.log('Magic link detected, processing sign-in...');
+        
         let email = window.localStorage.getItem('emailForSignIn');
         
         if (!email) {
@@ -86,6 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         firebaseAuth.signInWithEmailLink(email, window.location.href)
             .then((result) => {
+                console.log('Sign-in successful:', result);
+                
                 // Clear email from localStorage
                 window.localStorage.removeItem('emailForSignIn');
                 
@@ -96,5 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error signing in with email link:', error);
                 alert('There was an error signing you in. Please try again.');
             });
+    } else {
+        console.log('No magic link detected on this page');
     }
 }); 

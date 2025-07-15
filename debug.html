@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Debug</title>
+</head>
+<body>
+    <h1>Firebase Debug Page</h1>
+    <p>This page helps debug Firebase authentication issues.</p>
+    
+    <div id="debug-info">
+        <h2>Debug Information:</h2>
+        <p><strong>Current URL:</strong> <span id="currentUrl"></span></p>
+        <p><strong>Domain:</strong> <span id="domain"></span></p>
+        <p><strong>Firebase Auth State:</strong> <span id="authState">Checking...</span></p>
+    </div>
+
+    <div id="firebase-scripts">
+        <!-- Firebase SDK -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+        
+        <!-- Firebase Config -->
+        <script src="js/firebase-config.js"></script>
+        
+        <script>
+            // Display debug info
+            document.getElementById('currentUrl').textContent = window.location.href;
+            document.getElementById('domain').textContent = window.location.hostname;
+            
+            // Check Firebase auth state
+            firebaseAuth.onAuthStateChanged(function(user) {
+                if (user) {
+                    document.getElementById('authState').textContent = 'Signed in: ' + user.email;
+                } else {
+                    document.getElementById('authState').textContent = 'Not signed in';
+                }
+            });
+            
+            // Check if this is a magic link
+            if (firebaseAuth.isSignInWithEmailLink(window.location.href)) {
+                console.log('Magic link detected on debug page');
+                document.body.innerHTML += '<p style="color: green;"><strong>✅ Magic link detected!</strong></p>';
+            } else {
+                console.log('No magic link detected on debug page');
+                document.body.innerHTML += '<p style="color: red;"><strong>❌ No magic link detected</strong></p>';
+            }
+        </script>
+    </div>
+</body>
+</html> 
