@@ -12,17 +12,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoutBtn = document.getElementById('logoutBtn');
     const uploadAnotherBtn = document.getElementById('uploadAnother');
 
-    // Check authentication state
+    let authChecked = false;
+
+    // Check authentication state with better handling
     firebaseAuth.onAuthStateChanged(function(user) {
-        if (!user) {
-            // User is not signed in, redirect to login
-            window.location.href = 'login.html';
+        console.log('Auth state changed:', user ? 'Signed in as ' + user.email : 'Not signed in');
+        
+        if (!authChecked) {
+            authChecked = true;
+            
+            if (!user) {
+                // User is not signed in, redirect to login
+                console.log('No user found, redirecting to login');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            console.log('User authenticated:', user.email);
         }
     });
 
     // Logout functionality
     logoutBtn.addEventListener('click', function() {
         firebaseAuth.signOut().then(() => {
+            console.log('User signed out');
             window.location.href = 'index.html';
         }).catch((error) => {
             console.error('Error signing out:', error);
@@ -79,6 +92,14 @@ document.addEventListener('DOMContentLoaded', function() {
     uploadForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
+        // Double-check authentication before upload
+        const currentUser = firebaseAuth.currentUser;
+        if (!currentUser) {
+            alert('You need to be signed in to upload photos. Please sign in again.');
+            window.location.href = 'login.html';
+            return;
+        }
+        
         const file = photoFileInput.files[0];
         if (!file) {
             alert('Please select a photo to upload');
@@ -97,29 +118,34 @@ document.addEventListener('DOMContentLoaded', function() {
         btnText.style.display = 'none';
         btnLoading.style.display = 'flex';
 
+        console.log('Starting upload for user:', currentUser.email);
+
         // Upload file to Firebase Storage
         const storageRef = firebaseStorage.ref();
         const photoRef = storageRef.child(`photos/${Date.now()}_${file.name}`);
         
         photoRef.put(file)
             .then((snapshot) => {
+                console.log('File uploaded to storage');
                 // Get download URL
                 return snapshot.ref.getDownloadURL();
             })
             .then((downloadURL) => {
+                console.log('Got download URL:', downloadURL);
                 // Save metadata to Firestore
                 const photoData = {
                     imageUrl: downloadURL,
                     fileName: file.name,
                     fileSize: file.size,
                     uploadDate: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: firebaseAuth.currentUser.email,
+                    uploadedBy: currentUser.email,
                     players: selectedPlayers
                 };
 
                 return firebaseDb.collection('photos').add(photoData);
             })
-            .then(() => {
+            .then((docRef) => {
+                console.log('Photo metadata saved to Firestore:', docRef.id);
                 // Show success message
                 uploadForm.style.display = 'none';
                 successMessage.style.display = 'block';
@@ -137,8 +163,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (error.code === 'storage/unauthorized') {
                     errorMessage = 'You are not authorized to upload photos. Please sign in again.';
+                    window.location.href = 'login.html';
                 } else if (error.code === 'storage/quota-exceeded') {
                     errorMessage = 'Storage quota exceeded. Please contact the administrator.';
+                } else if (error.code === 'auth/user-token-expired') {
+                    errorMessage = 'Your session has expired. Please sign in again.';
+                    window.location.href = 'login.html';
                 }
                 
                 alert(errorMessage);

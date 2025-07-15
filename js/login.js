@@ -8,11 +8,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const successMessage = document.getElementById('successMessage');
     const userEmailSpan = document.getElementById('userEmail');
 
+    let authChecked = false;
+
     // Check if user is already signed in
     firebaseAuth.onAuthStateChanged(function(user) {
-        if (user) {
-            // User is already signed in, redirect to upload page
-            window.location.href = 'upload.html';
+        console.log('Login page - Auth state changed:', user ? 'Signed in as ' + user.email : 'Not signed in');
+        
+        if (!authChecked) {
+            authChecked = true;
+            
+            if (user) {
+                // User is already signed in, redirect to upload page
+                console.log('User already signed in, redirecting to upload');
+                window.location.href = 'upload.html';
+            }
         }
     });
 
