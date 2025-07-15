@@ -1,12 +1,15 @@
 // Firebase Configuration
-// TODO: Replace with real Firebase config from console
+// TODO: Replace the empty config below with your actual Firebase config from console
+// Go to: https://console.firebase.google.com/ → Your Project → Project Settings → Your Apps → Add App → Web
+// Then copy the firebaseConfig object and paste it here:
+
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc123"
 };
 
 // Initialize Firebase
