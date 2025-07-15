@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Check - The Hawks</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">The Hawks</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Gallery</a>
+                <a href="upload.html" class="nav-link">Upload</a>
+                <a href="login.html" class="nav-link">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="auth-check-container">
+                <h2>Authentication Status</h2>
+                <div id="authStatus">Checking...</div>
+                <div id="authDetails"></div>
+                <div id="actions">
+                    <button id="checkAuth" class="btn btn-primary">Check Auth Again</button>
+                    <button id="signOut" class="btn btn-secondary">Sign Out</button>
+                    <a href="upload.html" class="btn btn-primary">Go to Upload</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const authStatus = document.getElementById('authStatus');
+            const authDetails = document.getElementById('authDetails');
+            const checkAuthBtn = document.getElementById('checkAuth');
+            const signOutBtn = document.getElementById('signOut');
+
+            function updateAuthStatus() {
+                const user = firebaseAuth.currentUser;
+                if (user) {
+                    authStatus.innerHTML = '<span style="color: green;">✅ Signed In</span>';
+                    authDetails.innerHTML = `
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>UID:</strong> ${user.uid}</p>
+                        <p><strong>Email Verified:</strong> ${user.emailVerified}</p>
+                        <p><strong>Last Sign In:</strong> ${user.metadata.lastSignInTime}</p>
+                    `;
+                    signOutBtn.style.display = 'inline-block';
+                } else {
+                    authStatus.innerHTML = '<span style="color: red;">❌ Not Signed In</span>';
+                    authDetails.innerHTML = '<p>No user is currently signed in.</p>';
+                    signOutBtn.style.display = 'none';
+                }
+            }
+
+            // Listen for auth state changes
+            firebaseAuth.onAuthStateChanged(function(user) {
+                console.log('Auth state changed:', user ? user.email : 'No user');
+                updateAuthStatus();
+            });
+
+            // Check auth button
+            checkAuthBtn.addEventListener('click', function() {
+                updateAuthStatus();
+            });
+
+            // Sign out button
+            signOutBtn.addEventListener('click', function() {
+                firebaseAuth.signOut().then(() => {
+                    console.log('User signed out');
+                    updateAuthStatus();
+                }).catch((error) => {
+                    console.error('Error signing out:', error);
+                });
+            });
+
+            // Initial check
+            updateAuthStatus();
+        });
+    </script>
+</body>
+</html> 

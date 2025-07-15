@@ -18,6 +18,15 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
+// Enable Firebase Auth persistence
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  .then(() => {
+    console.log('Firebase Auth persistence enabled');
+  })
+  .catch((error) => {
+    console.error('Error setting auth persistence:', error);
+  });
+
 // Enable Firestore offline persistence
 db.enablePersistence()
   .catch((err) => {
@@ -34,3 +43,8 @@ db.enablePersistence()
 window.firebaseAuth = auth;
 window.firebaseDb = db;
 window.firebaseStorage = storage;
+
+// Debug auth state on initialization
+auth.onAuthStateChanged(function(user) {
+  console.log('Initial auth state:', user ? 'Signed in as ' + user.email : 'Not signed in');
+});
