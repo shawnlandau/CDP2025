@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Firebase Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Firebase Authentication Test</h1>
+    
+    <div id="status">Loading...</div>
+    <div id="details"></div>
+    
+    <button id="signInBtn" onclick="signIn()">Sign In with Magic Link</button>
+    <button id="signOutBtn" onclick="signOut()" style="display:none;">Sign Out</button>
+    <button id="checkBtn" onclick="checkAuth()">Check Auth Status</button>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    
+    <script>
+        const statusDiv = document.getElementById('status');
+        const detailsDiv = document.getElementById('details');
+        const signInBtn = document.getElementById('signInBtn');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const checkBtn = document.getElementById('checkBtn');
+
+        function updateStatus(message, type = 'info') {
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function updateDetails(details) {
+            detailsDiv.innerHTML = details;
+        }
+
+        function checkAuth() {
+            const user = firebaseAuth.currentUser;
+            if (user) {
+                updateStatus(`✅ Signed in as ${user.email}`, 'success');
+                updateDetails(`
+                    <h3>User Details:</h3>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>UID:</strong> ${user.uid}</p>
+                    <p><strong>Email Verified:</strong> ${user.emailVerified}</p>
+                    <p><strong>Last Sign In:</strong> ${user.metadata.lastSignInTime}</p>
+                `);
+                signInBtn.style.display = 'none';
+                signOutBtn.style.display = 'inline-block';
+            } else {
+                updateStatus('❌ Not signed in', 'error');
+                updateDetails('<p>No user is currently signed in.</p>');
+                signInBtn.style.display = 'inline-block';
+                signOutBtn.style.display = 'none';
+            }
+        }
+
+        function signIn() {
+            const email = prompt('Enter your email:');
+            if (!email) return;
+
+            const actionCodeSettings = {
+                url: 'https://shawnlandau.github.io/CDP2025/simple-test.html',
+                handleCodeInApp: true
+            };
+
+            updateStatus('Sending magic link...', 'info');
+
+            firebaseAuth.sendSignInLinkToEmail(email, actionCodeSettings)
+                .then(() => {
+                    updateStatus(`✅ Magic link sent to ${email}`, 'success');
+                    localStorage.setItem('emailForSignIn', email);
+                })
+                .catch((error) => {
+                    updateStatus(`❌ Error: ${error.message}`, 'error');
+                });
+        }
+
+        function signOut() {
+            firebaseAuth.signOut().then(() => {
+                updateStatus('✅ Signed out successfully', 'success');
+                checkAuth();
+            }).catch((error) => {
+                updateStatus(`❌ Error signing out: ${error.message}`, 'error');
+            });
+        }
+
+        // Listen for auth state changes
+        firebaseAuth.onAuthStateChanged(function(user) {
+            console.log('Auth state changed:', user ? user.email : 'No user');
+            checkAuth();
+        });
+
+        // Handle magic link sign-in
+        if (firebaseAuth.isSignInWithEmailLink(window.location.href)) {
+            updateStatus('🔗 Magic link detected, processing...', 'info');
+            
+            let email = localStorage.getItem('emailForSignIn');
+            if (!email) {
+                email = prompt('Please provide your email for confirmation');
+            }
+
+            firebaseAuth.signInWithEmailLink(email, window.location.href)
+                .then((result) => {
+                    updateStatus('✅ Sign-in successful!', 'success');
+                    localStorage.removeItem('emailForSignIn');
+                    checkAuth();
+                })
+                .catch((error) => {
+                    updateStatus(`❌ Sign-in error: ${error.message}`, 'error');
+                });
+        } else {
+            updateStatus('📋 Ready to test authentication', 'info');
+            checkAuth();
+        }
+    </script>
+</body>
+</html> 

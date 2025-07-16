@@ -12,25 +12,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoutBtn = document.getElementById('logoutBtn');
     const uploadAnotherBtn = document.getElementById('uploadAnother');
 
-    let authChecked = false;
+    console.log('Upload page loaded');
 
     // Check authentication state with better handling
     firebaseAuth.onAuthStateChanged(function(user) {
-        console.log('Auth state changed:', user ? 'Signed in as ' + user.email : 'Not signed in');
+        console.log('Upload page - Auth state changed:', user ? 'Signed in as ' + user.email : 'Not signed in');
         
-        if (!authChecked) {
-            authChecked = true;
-            
-            if (!user) {
-                // User is not signed in, redirect to login
-                console.log('No user found, redirecting to login');
-                window.location.href = 'login.html';
-                return;
-            }
-            
-            console.log('User authenticated:', user.email);
+        if (user) {
+            console.log('User authenticated on upload page:', user.email);
+            // User is signed in, show upload form
+            uploadForm.style.display = 'block';
+        } else {
+            console.log('No user found on upload page, redirecting to login');
+            // User is not signed in, redirect to login
+            window.location.href = 'login.html';
         }
     });
+
+    // Also check current user immediately
+    const currentUser = firebaseAuth.currentUser;
+    console.log('Current user on page load:', currentUser ? currentUser.email : 'No user');
+    
+    if (!currentUser) {
+        console.log('No current user, waiting for auth state change...');
+    }
 
     // Logout functionality
     logoutBtn.addEventListener('click', function() {
@@ -92,9 +97,14 @@ document.addEventListener('DOMContentLoaded', function() {
     uploadForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
+        console.log('Form submitted, checking authentication...');
+        
         // Double-check authentication before upload
         const currentUser = firebaseAuth.currentUser;
+        console.log('Current user on form submit:', currentUser ? currentUser.email : 'No user');
+        
         if (!currentUser) {
+            console.log('No user found on form submit, redirecting to login');
             alert('You need to be signed in to upload photos. Please sign in again.');
             window.location.href = 'login.html';
             return;
