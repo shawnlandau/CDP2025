@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#f5f5f5"/>
+  
+  <!-- Border -->
+  <rect x="10" y="10" width="380" height="380" fill="none" stroke="#2c3e50" stroke-width="4"/>
+  
+  <!-- HAWKS text -->
+  <text x="200" y="50" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="36" font-weight="bold" fill="#2c3e50" letter-spacing="8px">HAWKS</text>
+  
+  <!-- Stars section -->
+  <rect x="30" y="65" width="340" height="40" fill="#1e3a8a"/>
+  
+  <!-- Five stars -->
+  <g fill="white">
+    <polygon points="80,85 83,92 91,92 85,97 87,104 80,99 73,104 75,97 69,92 77,92" />
+    <polygon points="130,85 133,92 141,92 135,97 137,104 130,99 123,104 125,97 119,92 127,92" />
+    <polygon points="200,85 203,92 211,92 205,97 207,104 200,99 193,104 195,97 189,92 197,92" />
+    <polygon points="270,85 273,92 281,92 275,97 277,104 270,99 263,104 265,97 259,92 267,92" />
+    <polygon points="320,85 323,92 331,92 325,97 327,104 320,99 313,104 315,97 309,92 317,92" />
+  </g>
+  
+  <!-- BASEBALL text -->
+  <text x="200" y="140" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="28" font-weight="bold" fill="#2c3e50" letter-spacing="4px">BASEBALL</text>
+  
+  <!-- Red stripes background -->
+  <rect x="30" y="160" width="340" height="160" fill="#dc2626"/>
+  
+  <!-- White stripes -->
+  <rect x="30" y="175" width="340" height="15" fill="white"/>
+  <rect x="30" y="205" width="340" height="15" fill="white"/>
+  <rect x="30" y="235" width="340" height="15" fill="white"/>
+  <rect x="30" y="265" width="340" height="15" fill="white"/>
+  <rect x="30" y="295" width="340" height="15" fill="white"/>
+  
+  <!-- Baseball circle -->
+  <circle cx="200" cy="240" r="65" fill="white" stroke="#dc2626" stroke-width="3"/>
+  
+  <!-- Baseball stitching lines -->
+  <path d="M 160 220 Q 200 210 240 220" stroke="#dc2626" stroke-width="2" fill="none"/>
+  <path d="M 160 260 Q 200 270 240 260" stroke="#dc2626" stroke-width="2" fill="none"/>
+  <path d="M 165 225 L 175 235" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 170 215 L 180 225" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 220 225 L 230 215" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 225 235 L 235 225" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 165 255 L 175 245" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 170 265 L 180 255" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 220 255 L 230 265" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 225 245 L 235 255" stroke="#dc2626" stroke-width="1.5"/>
+  
+  <!-- Large H in center -->
+  <text x="200" y="265" text-anchor="middle" font-family="Times New Roman, serif" font-size="72" font-weight="bold" fill="#1e3a8a">H</text>
+  
+  <!-- COOPERSTOWN text -->
+  <text x="200" y="350" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="28" font-weight="bold" fill="#2c3e50" letter-spacing="4px">COOPERSTOWN</text>
+</svg>
